@@ -1,13 +1,13 @@
 package com.company;
 
 public abstract class Account implements BaseRate {
-    String name;
-    String sSN; //Social Security number
-    double balance;
+    private String name;
+    private String sSN; //Social Security number
+    private double balance;
 
-    static int index = 10000;
-    String accountNumber;
-    double rate;
+    private static int index = 10000;
+    protected String accountNumber;
+    protected double rate;
 
     public Account(String name, String sSN, double initDeposit) {
         this.name = name;
@@ -26,6 +26,33 @@ public abstract class Account implements BaseRate {
         return lastTwoSSN + uniqueID + randomNumber;
     }
     public abstract void setRate();
+
+    public void compound() {
+        double accruedInterest = balance * (rate/100);
+        balance = balance + accruedInterest;
+        System.out.println("Accrued Interest: $" + accruedInterest);
+        printBalance();
+    }
+
+    public void deposit(double amount) {
+        balance = balance + amount;
+        printBalance();
+    }
+
+    public void withdraw(double amount) {
+        balance = balance - amount;
+        printBalance();
+    }
+
+    public void transfer(String toWhere, double amount) {
+        balance = balance - amount;
+        System.out.println("Transfered $" + amount + " to: " + toWhere);
+        printBalance();
+    }
+
+    public void printBalance() {
+        System.out.println("Your balance is $" + balance);
+    }
 
     public void showInfo() {
         System.out.println(
